@@ -35,3 +35,15 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# VS code settings folder
+.vscode
+
+# Yarn
+yarn-error*
+
+# dist folder
+dist
+
+# .env files
+.env
