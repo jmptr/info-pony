@@ -5,3 +5,5 @@ env:
   - HTTP_PORT=8081
 script:
   - npm run coverage
+after_script:
+  - "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"

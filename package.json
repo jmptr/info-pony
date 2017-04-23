@@ -36,6 +36,7 @@
     "chai": "3.5.0",
     "clean-webpack-plugin": "0.1.16",
     "copy-webpack-plugin": "4.0.1",
+    "coveralls": "^2.13.0",
     "css-loader": "0.28.0",
     "dotenv": "4.0.0",
     "enzyme": "2.8.2",
