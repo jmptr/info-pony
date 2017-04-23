@@ -1,13 +1,15 @@
 const EventEmitter = require('events');
 
 class Agent extends EventEmitter {
-  constructor(options = { interval: 10000 }) {
+  constructor(options = { interval: 10000, cacheLimit: 60 }) {
     const {
       interval,
+      cacheLimit,
     } = options;
     super();
     this.events = [];
     this.cache = {};
+    this.cacheLimit = cacheLimit;
     this.interval = interval;
   }
 
@@ -33,7 +35,7 @@ class Agent extends EventEmitter {
       const result = callback();
       const cache = this.cache[name];
 
-      if (cache.length === 10) {
+      if (cache.length === this.cacheLimit) {
         cache.shift();
       }
       cache.push(result);

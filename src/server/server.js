@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 createSocketServer(server);
 
-server.listen(config.express.port, (error) => {
+server.listen(config.express.port, config.express.ip, (error) => {
   if (error) {
     log.error(`Unable to listen for connections ${error}`);
     process.exit(10);

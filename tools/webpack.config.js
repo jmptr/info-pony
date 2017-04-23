@@ -23,7 +23,6 @@ module.exports = {
       'react-tap-event-plugin',
       'redux',
       'redux-logger',
-      'redux-thunk',
     ],
   },
   output: {
