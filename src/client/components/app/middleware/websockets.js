@@ -4,7 +4,7 @@ import {
 } from '../../../../shared/action-types';
 
 const webSocketsMiddleware = (store) => {
-  const socket = new WebSocket('ws://localhost:8081');
+  const socket = new WebSocket(`ws://${process.env.IP_ADDRESS}:${process.env.HTTP_PORT}`);
 
   socket.addEventListener('open', () => {
     store.dispatch({ type: CONNECTED });
