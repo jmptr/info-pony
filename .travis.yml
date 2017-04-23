@@ -4,4 +4,4 @@ node_js:
 env:
   - EXPRESS_PORT=8888
 script:
-  - npm run test:coverage
+  - npm run coverage
