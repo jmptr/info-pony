@@ -7,6 +7,7 @@ import {
   CONNECTED,
   CPU_STAT_RECEIVED,
 } from '../../../../shared/action-types';
+import config from '../../../../shared/config';
 
 chai.should();
 
@@ -16,7 +17,7 @@ describe('websockets middleware', () => {
   let mw;
 
   before(() => {
-    mockServer = new Server(process.env.SOCKET_ADDRESS);
+    mockServer = new Server(config.websockets.address);
     mockStore = {
       dispatch: sinon.spy(),
     };

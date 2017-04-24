@@ -7,7 +7,7 @@ const log = bole('server');
 const os = require('os');
 
 const app = require('./app');
-const config = require('./config');
+const config = require('../shared/config');
 const createSocketServer = require('./socket');
 
 const server = http.createServer(app);

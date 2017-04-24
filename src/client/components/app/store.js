@@ -8,7 +8,7 @@ import webSocketsMiddleware from './middleware/websockets';
 
 const reducer = combineReducers({
   routing: routerReducer,
-  cpuStats: createCpuStatReducer({ limit: 10 }),
+  cpuStats: createCpuStatReducer({ limit: 60 }),
 });
 
 const logger = createLogger({

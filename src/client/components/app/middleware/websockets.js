@@ -2,9 +2,10 @@ import {
   CONNECTED,
   CPU_STAT_RECEIVED,
 } from '../../../../shared/action-types';
+import config from '../../../../shared/config';
 
 const webSocketsMiddleware = (store) => {
-  const socket = new WebSocket(process.env.SOCKET_ADDRESS);
+  const socket = new WebSocket(config.websockets.address);
 
   socket.addEventListener('open', () => {
     store.dispatch({ type: CONNECTED });

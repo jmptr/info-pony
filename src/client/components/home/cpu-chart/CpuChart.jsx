@@ -26,45 +26,56 @@ const CustomizedAxisTick = (props) => {
   );
 }
 
-const CpuChart = ({ tempChart }) => {
+const CpuChart = ({ chartData, lineSettings }) => {
+  const lines = lineSettings.map((item, idx) => <Line key={item.key} type="monotone" dataKey={item.key} stroke={item.color} />);
+
   return (
     <div>
       <LineChart
-        width={600}
+        width={750}
         height={300}
-        data={tempChart}
+        data={chartData}
         margin={{top: 5, right: 30, left: 20, bottom: 5}}>
         <XAxis dataKey="captured"/>
         <YAxis tick={CustomizedAxisTick} />
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip/>
         <Legend />
-        <Line type="monotone" dataKey="cpu_0_idle" stroke="#8884d8" activeDot={{r: 8}}/>
-        <Line type="monotone" dataKey="cpu_1_idle" stroke="#82ca9d" />
-        <Line type="monotone" dataKey="cpu_2_idle" stroke="#82ca9d" />
-        <Line type="monotone" dataKey="cpu_3_idle" stroke="#82ca9d" />
+        {lines}
       </LineChart>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  const tempChart = state.cpuStats.map((cpuStat) => {
+  const cpuCount = state.cpuStats[0] && state.cpuStats[0].stat.length;
+  let lineSettings = [];
+
+  if (cpuCount) {
+    lineSettings = [...Array(cpuCount)].map((item, idx) => ({
+      key: `cpu_${idx}_idle`,
+      color: "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}),
+    }));
+  }
+  const chartData = state.cpuStats.map((cpuStat) => {
     const {
       captured,
       stat,
     } = cpuStat;
-    return {
-      captured,
-      cpu_0_idle: stat[0].times.idle,
-      cpu_1_idle: stat[1].times.idle,
-      cpu_2_idle: stat[2].times.idle,
-      cpu_3_idle: stat[3].times.idle,
-    };
+
+    // since stat is an array of { times: { user, idle, ...etc }}
+    // reduce it to a literal with the key of each CPUs
+    const keyedStats = stat.reduce((accum, item, idx) => {
+      const key = `cpu_${idx}_idle`
+      accum[key] = item.times.idle;
+      return accum;
+    }, {});
+    return Object.assign(keyedStats, { captured });
   });
 
   return {
-    tempChart,
+    chartData,
+    lineSettings,
   };
 };
 
