@@ -4,7 +4,7 @@ import {
 } from '../../../../shared/action-types';
 
 const webSocketsMiddleware = (store) => {
-  const socket = new WebSocket(`${process.env.SOCKET_PROTOCOL}://${process.env.IP_ADDRESS}:${process.env.HTTP_PORT}`);
+  const socket = new WebSocket(process.env.SOCKET_ADDRESS);
 
   socket.addEventListener('open', () => {
     store.dispatch({ type: CONNECTED });

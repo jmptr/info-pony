@@ -16,7 +16,7 @@ describe('websockets middleware', () => {
   let mw;
 
   before(() => {
-    mockServer = new Server(`${process.env.SOCKET_PROTOCOL}://${process.env.IP_ADDRESS}:${process.env.HTTP_PORT}`);
+    mockServer = new Server(process.env.SOCKET_ADDRESS);
     mockStore = {
       dispatch: sinon.spy(),
     };

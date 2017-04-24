@@ -111,7 +111,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.IP_ADDRESS': JSON.stringify(process.env.IP_ADDRESS || 'localhost'),
       'process.env.HTTP_PORT': JSON.stringify(process.env.HTTP_PORT || '8081'),
-      'process.env.SOCKET_PROTOCOL': JSON.stringify(process.env.SOCKET_PROTOCOL || 'ws'),
+      'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'ws://localhost:8081'),
     }),
   ],
   // // https://webpack.github.io/docs/webpack-dev-server.html
