@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 import jsdom from 'jsdom';
 import { WebSocket as MockSocket } from 'mock-socket';
