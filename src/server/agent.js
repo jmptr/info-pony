@@ -8,6 +8,7 @@ class Agent extends EventEmitter {
     this.cacheLimit = 60;
     this.interval = 10000;
     this.alerts = [];
+    this.threshold = 140000000;
   }
 
   start() {
