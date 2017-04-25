@@ -22,7 +22,7 @@ const webSocketsMiddleware = (store) => {
       payload = {};
     }
 
-    if ([MEMORY_STAT_RECEIVED].includes(payload.type)) {
+    if (payload.type) {
       store.dispatch(payload);
     } else {
       store.dispatch({ type: INVALID_MESSAGE_RECEIVED, payload });
