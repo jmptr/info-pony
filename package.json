@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node src/server/index.js",
     "start:c9": "HTTP_PORT=$PORT IP_ADDRESS=$IP node src/server/index.js",
-    "test": "mocha --compilers js:babel-core/register ./src/**/*.spec.js --require tools/test.setup.js",
-    "coverage": "./node_modules/.bin/istanbul cover --include-all-sources --root src  ./node_modules/.bin/_mocha src/**/*.spec.js -- --require babel-register  --require tools/test.setup.js",
-    "coverage:win": "./node_modules/.bin/istanbul cover --include-all-sources --root src  ./node_modules/mocha/bin/_mocha src/**/*.spec.js -- --require babel-register  --require tools/test.setup.js"
+    "test": "mocha --compilers js:babel-core/register './src/**/*.spec.js' --require tools/test.setup.js",
+    "test:win": "mocha --compilers js:babel-core/register ./src/**/*.spec.js --require tools/test.setup.js",
+    "coverage": "./node_modules/.bin/istanbul cover --include-all-sources --root src  ./node_modules/.bin/_mocha './src/**/*.spec.js' -- --require babel-register  --require tools/test.setup.js",
+    "coverage:win": "./node_modules/.bin/istanbul cover --include-all-sources --root src  ./node_modules/mocha/bin/_mocha ./src/**/*.spec.js -- --require babel-register  --require tools/test.setup.js"
   },
   "repository": {
     "type": "git",
