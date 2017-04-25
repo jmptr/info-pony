@@ -1,6 +1,6 @@
 import {
   CPU_STAT_RECEIVED,
-} from '../../../../shared/action-types';
+} from '../../../shared/action-types';
 
 export const createCpuStatReducer = ({ limit }) => {
   const INITIAL_STATE = [];

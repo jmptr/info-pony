@@ -1,40 +1,22 @@
-const os = require('os');
-const bole = require('bole');
-const log = bole('server');
+const {
+  CPU_STAT_RECEIVED,
+  MEMORY_STAT_RECEIVED,
+} = require('../shared/action-types');
 
 const WebSocketServer = require('ws').Server;
-const Agent = require('./agent');
+const agent = require('./agent');
 
 const createSocketServer = (server) => {
   const wss = new WebSocketServer({ server, clientTracking: true });
-  const agent = new Agent();
-
-  agent.addEvent('cpus', () => {
-    const captured = new Date();
-    const stat = os.cpus();
-
-    return {
-      captured,
-      stat,
-    };
-  });
 
   agent.start();
 
   wss.on('connection', (ws) => {
-    log.info('connected');
-    ws.send(JSON.stringify(agent.cache['cpus']));
+    ws.send(JSON.stringify({ type: MEMORY_STAT_RECEIVED, payload: agent.getCache() }));
 
-    ws.on('message', (message) => {
-      log.info('message', message);
-    });
-
-    agent.on('cpus', (data) => {
+    agent.on('stat_received', (data) => {
+      data = Object.assign({ type: MEMORY_STAT_RECEIVED }, { payload: data });
       return ws.readyState === 1 && ws.send(JSON.stringify(data));
-    });
-
-    ws.on('close', (connection) => {
-      log.info('close');
     });
   });
 

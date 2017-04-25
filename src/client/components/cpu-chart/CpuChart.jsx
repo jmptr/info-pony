@@ -10,7 +10,7 @@ import {
   Legend,
 } from 'recharts';
 
-const CustomizedAxisTick = (props) => {
+const YAxisTick = (props) => {
   const {x, y, stroke, payload} = props;
   
   return (
@@ -21,7 +21,21 @@ const CustomizedAxisTick = (props) => {
         dy={16}
         textAnchor="end"
         fill="#666"
-        transform="rotate(-35)">{payload.value} (ms)</text>
+        transform="rotate(-35)">{Math.floor(payload.value / 1000 / 60)} (m)</text>
+    </g>
+  );
+}
+
+const XAxisTick = (props) => {
+  const {x, y, payload} = props;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        dy={16}
+        textAnchor="end"
+        fill="#666">{(new Date(payload.value)).toLocaleTimeString()}</text>
     </g>
   );
 }
@@ -30,20 +44,18 @@ const CpuChart = ({ chartData, lineSettings }) => {
   const lines = lineSettings.map((item, idx) => <Line key={item.key} type="monotone" dataKey={item.key} stroke={item.color} />);
 
   return (
-    <div>
-      <LineChart
-        width={750}
-        height={300}
-        data={chartData}
-        margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-        <XAxis dataKey="captured"/>
-        <YAxis tick={CustomizedAxisTick} />
-        <CartesianGrid strokeDasharray="3 3"/>
-        <Tooltip/>
-        <Legend />
-        {lines}
-      </LineChart>
-    </div>
+    <LineChart
+      width={750}
+      height={300}
+      data={chartData}
+      margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+      <XAxis tick={XAxisTick} dataKey="captured" domain={['dataMin', 'dataMax']} />
+      <YAxis tick={YAxisTick} />
+      <CartesianGrid strokeDasharray="3 3"/>
+      <Tooltip/>
+      <Legend />
+      {lines}
+    </LineChart>
   );
 };
 
@@ -79,8 +91,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CpuChart);
+export default connect(mapStateToProps)(CpuChart);

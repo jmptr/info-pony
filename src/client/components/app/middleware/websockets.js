@@ -1,7 +1,9 @@
 import {
   CONNECTED,
-  CPU_STAT_RECEIVED,
+  MEMORY_STAT_RECEIVED,
+  INVALID_MESSAGE_RECEIVED,
 } from '../../../../shared/action-types';
+
 import config from '../../../../shared/config';
 
 const webSocketsMiddleware = (store) => {
@@ -13,12 +15,18 @@ const webSocketsMiddleware = (store) => {
 
   socket.addEventListener('message', ({ data = '{}' }) => {
     let payload;
+
     try {
       payload = JSON.parse(data);
     } catch (err) {
       payload = {};
     }
-    store.dispatch({ type: CPU_STAT_RECEIVED, payload });
+
+    if ([MEMORY_STAT_RECEIVED].includes(payload.type)) {
+      store.dispatch(payload);
+    } else {
+      store.dispatch({ type: INVALID_MESSAGE_RECEIVED, payload });
+    }
   });
 };
 

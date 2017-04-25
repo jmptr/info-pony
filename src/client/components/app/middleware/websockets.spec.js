@@ -5,7 +5,7 @@ import webSocketsMiddleware from './websockets';
 
 import {
   CONNECTED,
-  CPU_STAT_RECEIVED,
+  INVALID_MESSAGE_RECEIVED,
 } from '../../../../shared/action-types';
 import config from '../../../../shared/config';
 
@@ -40,11 +40,11 @@ describe('websockets middleware', () => {
 
   describe('on message', () => {
     describe('with a message that is not JSON', () => {
-      it('should dispatch an action CPU_STAT_RECEIVED with an empty object', (done) => {
+      it('should dispatch an action INVALID_MESSAGE_RECEIVED with an empty object', (done) => {
         mockServer.send('undefined');
 
         setTimeout(() => {
-          sinon.assert.calledWith(mockStore.dispatch.secondCall, { type: CPU_STAT_RECEIVED, payload: {} });
+          sinon.assert.calledWith(mockStore.dispatch.secondCall, { type: INVALID_MESSAGE_RECEIVED, payload: {} });
           done();
         }, 100);
       });

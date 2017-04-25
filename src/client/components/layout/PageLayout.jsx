@@ -6,6 +6,12 @@ import { createStyleSheet } from 'jss-theme-reactor';
 
 import AppHeader from './AppHeader';
 
+const styleSheet = createStyleSheet('PageLayout', () => ({
+  childRoot: {
+    marginTop: '15px',
+  },
+}));
+
 const PageLayout = (props, context) => {
   const {
     children,
@@ -14,12 +20,12 @@ const PageLayout = (props, context) => {
   return (
     <MuiThemeProvider>
       <div>
-        <Layout container direction="column" justify="flex-start" align="stretch">
+        <Layout container direction="column" justify="flex-start" align="stretch" gutter={0}>
           <Layout item>
             <AppHeader title={'Info Pony'} />
           </Layout>
           <Layout item>
-            <Layout container direction="row" justify="center" align="center">
+            <Layout container direction="row" justify="center" align="center" gutter={0}>
               <Layout item xs={12} sm={12} md={10} lg={8} xl={6}>
                 {children}
               </Layout>

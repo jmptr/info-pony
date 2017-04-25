@@ -4,13 +4,16 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import HomePage from '../home/HomePage';
+
 import store from './store';
 import history from './history';
 
 const App = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Route exact path="/" component={HomePage}/>
+      <div>
+        <Route exact path="/" component={HomePage}/>
+      </div>
     </ConnectedRouter>
   </Provider>
 );
