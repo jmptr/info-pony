@@ -29,7 +29,7 @@ export const Alerts = ({ alerts }) => {
     <Text>
       <List>
           <ListItem>
-            <ListItemText primary={`Alerts ${alerts.length}`} />
+            <ListItemText primary='Alerts' />
           </ListItem>
         {alerts && alerts.map((alert) => <ListItem key={alert.captured}>
           <ListItemIcon>
