@@ -1,10 +1,4 @@
 import React from 'react';
-import {
-  Card,
-  CardContent,
-  CardActions,
-} from 'material-ui/Card';
-import Icon from 'material-ui/Icon';
 import Text from 'material-ui/Text';
 import { connect } from 'react-redux';
 import {

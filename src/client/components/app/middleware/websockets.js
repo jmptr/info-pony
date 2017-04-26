@@ -1,6 +1,5 @@
 import {
   CONNECTED,
-  MEMORY_STAT_RECEIVED,
   INVALID_MESSAGE_RECEIVED,
 } from '../../../../shared/action-types';
 

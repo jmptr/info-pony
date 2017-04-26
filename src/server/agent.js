@@ -3,7 +3,6 @@ const EventEmitter = require('events');
 class Agent extends EventEmitter {
   constructor() {
     super();
-    this.events = [];
     this.cache = [];
     this.cacheLimit = 60;
     this.interval = 10000;
@@ -13,7 +12,6 @@ class Agent extends EventEmitter {
 
   start() {
     if (this.timeout) return;
-
     const onTick = this.onTick.bind(this)
     this.timeout = setInterval(onTick, this.interval);
     this.onTick();
@@ -42,13 +40,14 @@ class Agent extends EventEmitter {
       const diff = len - this.cacheLimit;
       this.cache.splice(len - diff);
     }
+    this.doAlertCheck();
   }
 
   getAverageHeapUsed() {
-    // get the average heap used for the last 2 minutes (12 stats)
-    const minItems = 12;
+    // get the average heap used for the last 1 minutes (6 stats)
+    const minItems = 6;
     const len = this.cache.length;
-    if (len < minItems) return 0;
+    if (len < minItems) return NaN;
 
     return this.cache
       .slice(len - minItems)
@@ -58,13 +57,26 @@ class Agent extends EventEmitter {
 
   doAlertCheck() {
     const average = this.getAverageHeapUsed();
-    if (average === 0) return;
+    if (average === NaN) return;
+    const openAlert = this.alerts
+      .find((alert) => !alert.closed);
+    const captured = new Date();
+
+    if (average > this.threshold && !openAlert) {
+      // determine whether there's an ongoing alert before adding a new one
+      const alert = { captured, meta: 'Heap Used', message: `Threshold exceeds ${this.threshold} for 1 minute.` };
+      this.alerts.push(alert);
+      this.emit('alert_created', alert)
+    } else if (average < this.threshold && openAlert) {
+      // find the open alert and close it
+      openAlert.closed = captured;
+      this.emit('alert_closed', openAlert);
+    }
   }
 
   onTick() {
     const stat = this.captureStats();
     this.addToCache(stat);
-    this.doAlertCheck();
     this.emit('stat_received', stat);
   }
 

@@ -4,11 +4,13 @@ import { createLogger } from 'redux-logger';
 
 import history from './history';
 import { createMemoryStatReducer } from '../memory-chart/memory-stat-reducer';
+import { alertsReducer } from '../alerts/alerts-reducer';
 import webSocketsMiddleware from './middleware/websockets';
 
 const reducer = combineReducers({
   routing: routerReducer,
   memoryStats: createMemoryStatReducer({ limit: 60 }),
+  alerts: alertsReducer(),
 });
 
 const logger = createLogger({

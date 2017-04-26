@@ -6,6 +6,7 @@ import Layout from 'material-ui/Layout';
 
 import PageLayout from '../layout/PageLayout';
 import MemoryChart from '../memory-chart/MemoryChart';
+import Alerts from '../alerts/Alerts';
 
 const HomePage = ({ chartData }) => {
   return (
@@ -17,6 +18,7 @@ const HomePage = ({ chartData }) => {
           </Layout>
           <Layout item>
             <MemoryChart />
+            <Alerts />
           </Layout>
         </Layout>
       </Paper>

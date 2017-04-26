@@ -23,11 +23,11 @@ describe('agent', () => {
 
   describe('getAverageHeapUsed', () => {
     describe('with less than the needed stats', () => {
-      it('should return 0', () => {
-        const stats = [...Array(11)]
+      it('should return NaN', () => {
+        const stats = [...Array(3)]
           .map((n, i) => ({ rss: 1000, heapUsed: 12, heapTotal: 1 + 2 }));
         agent.addToCache(stats);
-        agent.getAverageHeapUsed().should.equal(0);
+        agent.getAverageHeapUsed().should.be.NaN;
       });
     });
 
@@ -41,4 +41,17 @@ describe('agent', () => {
     })
   });
 
+  describe('alerts', () => {
+    it('emit an alert when heapUsed is over the threshold', () => {
+      const threshold = agent.threshold + 100;
+      const items = [...Array(100)]
+        .map((n, i) => ({ rss: threshold + 3, heapUsed: threshold + 2, heapTotal: threshold + 1 }));
+      
+      const onAlertSpy = sinon.spy();
+      agent.on('alert_created', onAlertSpy);
+      agent.addToCache(items);
+      sinon.assert.calledOnce(onAlertSpy);
+      agent.alerts.length.should.equal(1);
+    });
+  });
 });
