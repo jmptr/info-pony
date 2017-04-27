@@ -8,7 +8,7 @@ import PageLayout from '../layout/PageLayout';
 import MemoryChart from '../memory-chart/MemoryChart';
 import Alerts from '../alerts/Alerts';
 
-const HomePage = ({ chartData }) => {
+const HomePage = ({ chartData, alerts }) => {
   return (
     <PageLayout>
       <Paper>
@@ -17,8 +17,10 @@ const HomePage = ({ chartData }) => {
             <Text type="title" colorInherit>Memory Usage</Text>
           </Layout>
           <Layout item>
-            <MemoryChart />
-            <Alerts />
+            <MemoryChart chartData={chartData} />
+          </Layout>
+          <Layout item>
+            <Alerts alerts={alerts} />
           </Layout>
         </Layout>
       </Paper>
@@ -26,4 +28,16 @@ const HomePage = ({ chartData }) => {
   );
 };
 
-export default HomePage;
+export const mapStateToProps = (state) => {
+  let {
+    memoryStats: chartData,
+    alerts,
+  } = state;
+
+  return {
+    chartData,
+    alerts,
+  };
+};
+
+export default connect(mapStateToProps)(HomePage);

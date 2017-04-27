@@ -2,15 +2,9 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import customPropTypes from 'material-ui/utils/customPropTypes';
 import Layout from 'material-ui/Layout';
-import { createStyleSheet } from 'jss-theme-reactor';
+import createMuiTheme from 'material-ui/styles/theme';
 
 import AppHeader from './AppHeader';
-
-const styleSheet = createStyleSheet('PageLayout', () => ({
-  childRoot: {
-    marginTop: '15px',
-  },
-}));
 
 const PageLayout = (props, context) => {
   const {

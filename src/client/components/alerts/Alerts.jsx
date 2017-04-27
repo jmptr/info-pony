@@ -13,7 +13,6 @@ import {
 } from 'material-ui/List';
 import Icon from 'material-ui/Icon';
 import Text from 'material-ui/Text';
-import { connect } from 'react-redux';
 
 export const Alerts = ({ alerts }) => {
   const toTime = (ref) => (new Date(ref)).toLocaleTimeString()
@@ -42,14 +41,4 @@ export const Alerts = ({ alerts }) => {
   );
 };
 
-export const mapStateToProps = (state) => {
-  let {
-    alerts,
-  } = state;
-
-  return {
-    alerts,
-  };
-};
-
-export default connect(mapStateToProps)(Alerts);
+export default Alerts;

@@ -9,9 +9,11 @@ const styleSheet = createStyleSheet('AppHeader', () => ({
   root: {
     position: 'relative',
     width: '100%',
+    marginBottom: '15px',
   },
   appBar: {
     position: 'relative',
+    backgroundColor: '#4bb9a1',
   },
 }));
 

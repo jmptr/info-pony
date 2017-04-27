@@ -1,6 +1,5 @@
 import React from 'react';
 import Text from 'material-ui/Text';
-import { connect } from 'react-redux';
 import {
   LineChart,
   Line,
@@ -9,7 +8,6 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine,
 } from 'recharts';
 
 function bytesToSize(bytes) {
@@ -54,7 +52,7 @@ const XAxisTick = (props) => {
   );
 };
 
-const CustomTooltip = (props) => {
+const TooltipContent = (props) => {
   const {
     active,
   } = props;
@@ -85,7 +83,7 @@ export const MemoryChart = ({ chartData }) => {
         <XAxis minTicks={60} tick={XAxisTick} dataKey="captured" />
         <YAxis tick={YAxisTick} type="number" domain={[0, 'dataMax + 100']} />
         <CartesianGrid strokeDasharray="3 3"/>
-        <Tooltip content={CustomTooltip} />
+        <Tooltip content={TooltipContent} />
         <Legend verticalAlign="top" height={36} />
         <Line type="monotone" name="RSS" dataKey={'rss'} stroke={'#0D47A1'} />
         <Line type="monotone" name="Heap Total" dataKey={'heapTotal'} stroke={'#E91E63'} />
@@ -95,14 +93,4 @@ export const MemoryChart = ({ chartData }) => {
   );
 };
 
-export const mapStateToProps = (state) => {
-  let {
-    memoryStats: chartData,
-  } = state;
-
-  return {
-    chartData,
-  };
-};
-
-export default connect(mapStateToProps)(MemoryChart);
+export default MemoryChart;
